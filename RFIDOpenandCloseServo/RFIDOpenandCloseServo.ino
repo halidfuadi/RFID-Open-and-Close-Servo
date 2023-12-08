@@ -22,6 +22,8 @@ void close(){
 
 void open(){
   myServo.write(0);
+  delay(3000);
+  myServo.write(180);
 }
 
 void loop() {
@@ -59,7 +61,6 @@ void loop() {
     Serial.println("Kartu Tidak Cocok");
     Serial.println();
     delay(1000);
-    close();
   }
 
   else{

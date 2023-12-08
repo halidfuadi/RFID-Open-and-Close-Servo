@@ -6,6 +6,7 @@
 #define SDA_PIN D2
 
 Servo myServo;
+int led = D8;
 MFRC522 mfrc522(SDA_PIN, RST_PIN);
 
 void setup() {
@@ -13,6 +14,7 @@ void setup() {
   SPI.begin();
   mfrc522.PCD_Init();
   myServo.attach(0);
+  pinMode(led, OUTPUT);
   Serial.println("Put your card to the reader...");
 }
 
@@ -24,6 +26,20 @@ void open(){
   myServo.write(0);
   delay(3000);
   myServo.write(180);
+}
+
+void blink(){
+  digitalWrite(led, HIGH);
+  delay(500);
+  digitalWrite(led, LOW);
+  delay(500);
+  digitalWrite(led, HIGH);
+  delay(500);
+  digitalWrite(led, LOW);
+  delay(500);
+  digitalWrite(led, HIGH);
+  delay(500);
+  digitalWrite(led, LOW);
 }
 
 void loop() {
@@ -53,6 +69,8 @@ void loop() {
   if(content.substring(1) == "5E B8 E1 2B"){
     Serial.println("Kartu cocok");
     Serial.println();
+    delay(500);
+    digitalWrite(led, HIGH);
     delay(1000);
     open();
   }
@@ -60,6 +78,7 @@ void loop() {
   else if(content.substring(1) == "56 67 7B AC"){
     Serial.println("Kartu Tidak Cocok");
     Serial.println();
+    blink();
     delay(1000);
   }
 
